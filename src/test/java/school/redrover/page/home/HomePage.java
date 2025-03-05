@@ -45,9 +45,6 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(xpath = "//button[@data-id='ok']")
     private WebElement yesButton;
 
-    @FindBy(xpath = "//p[contains(text(), 'This page is where')]")
-    private WebElement headerDescription;
-
     @FindBy(xpath = "//div[@class='empty-state-block']/h1")
     private WebElement welcomeTitle;
 
@@ -63,17 +60,14 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(xpath = "//tr/td/a[@class='jenkins-table__link model-link inside']")
     private List<WebElement> projectList;
 
-    @FindBy(xpath = "//div[@class='tippy-content']")
-    private WebElement buildScheduledTooltip;
+    @FindBy(xpath = "//div[@id='notification-bar']")
+    private WebElement buildScheduledNotificationBar;
 
     @FindBy(xpath = "(//button[@class='jenkins-menu-dropdown-chevron'])[1]")
     private WebElement adminDropdown;
 
-    @FindBy(xpath = "//a[contains(@href,'/user/admin/configure')]")
-    private WebElement configureAdminDropdown;
-
-    @FindBy(xpath = "//*[@href='/user/admin']")
-    private WebElement admin;
+    @FindBy(xpath = "//a[contains(@href,'/user/admin/preferences')]")
+    private WebElement preferencesAdminDropdown;
 
     @FindBy(xpath = "//a[contains(@href,'/user/admin/credentials')]")
     private WebElement credentialsDropdown;
@@ -141,7 +135,7 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(xpath = "//td[text()= 'No builds in the queue.' ]")
     private WebElement buildQueueText;
 
-    @FindBy(xpath = "//div[@class='tippy-box']//a")
+    @FindBy(xpath = "//div[@class='jenkins-dropdown']//a")
     private List<WebElement> breadcrumbBarMenuList;
 
     @FindBy(xpath = "//div[@id='executors']/div[@class='pane-header']/a")
@@ -149,6 +143,9 @@ public class HomePage extends BasePage<HomePage> {
 
     @FindBy(xpath = "div[@id='executors']/div[@class='pane-content']/div/div/a")
     private List<WebElement> nodeList;
+
+    @FindBy(xpath = "//div[@id='breadcrumbBar']//a/button")
+    private WebElement dashboardChevron;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -365,8 +362,8 @@ public class HomePage extends BasePage<HomePage> {
         getWait10().until(ExpectedConditions.visibilityOf(getDriver().findElement(
                         By.xpath("//td[@class='jenkins-table__cell--tight']//a[@tooltip='Schedule a Build for %s']".formatted(name)))))
                 .click();
-        getWait10().until(ExpectedConditions.visibilityOf(buildScheduledTooltip));
-        getWait10().until(ExpectedConditions.invisibilityOf(buildScheduledTooltip));
+        getWait10().until(ExpectedConditions.attributeContains(buildScheduledNotificationBar, "class", "--visible"));
+        getWait10().until(ExpectedConditions.attributeContains(buildScheduledNotificationBar, "class", "--hidden"));
 
         return this;
     }
@@ -542,8 +539,8 @@ public class HomePage extends BasePage<HomePage> {
     }
 
     @Step("Click 'Configure' at user dropdown menu")
-    public UserConfigPage clickConfigureAdminDropdownMenu() {
-        getWait2().until(ExpectedConditions.elementToBeClickable(configureAdminDropdown)).click();
+    public UserConfigPage clickPreferencesAdminDropdownMenu() {
+        getWait5().until(ExpectedConditions.elementToBeClickable(preferencesAdminDropdown)).click();
 
         return new UserConfigPage(getDriver());
     }
@@ -571,15 +568,14 @@ public class HomePage extends BasePage<HomePage> {
     public HomePage selectBreadcrumbBarMenu() {
         new Actions(getDriver()).moveToElement(getDriver().findElement(By.xpath("//div[@id='breadcrumbBar']//a"))).perform();
 
-        TestUtils.moveAndClickWithJS(getDriver(), getWait5().until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//div[@id='breadcrumbBar']//a/button"))));
+        TestUtils.moveAndClickWithJS(getDriver(), getWait10().until(ExpectedConditions.visibilityOf(dashboardChevron)));
 
         return this;
     }
 
     @Step("Get BreadcrumbBar menu list")
     public List<WebElement> getBreadcrumbBarMenuList() {
-        return breadcrumbBarMenuList;
+        return getWait10().until(ExpectedConditions.visibilityOfAllElements(breadcrumbBarMenuList));
     }
 
     @Step("Get the list of Node names from the 'Build Executors Status' block on the Home page")

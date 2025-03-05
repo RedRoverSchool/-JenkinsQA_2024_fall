@@ -6,7 +6,6 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.testdata.TestDataProvider;
 import school.redrover.page.home.HomePage;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Epic("02 Pipeline")
-@Ignore
+
 public class PipelineProjectTest extends BaseTest {
 
     private final static String PIPELINE_NAME = "TestName";

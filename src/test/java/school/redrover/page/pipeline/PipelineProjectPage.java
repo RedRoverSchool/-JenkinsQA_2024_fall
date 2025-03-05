@@ -22,7 +22,7 @@ public class PipelineProjectPage extends BaseProjectPage<PipelineProjectPage, Pi
     @FindBy(css = "a[data-build-success='Build scheduled']")
     private WebElement buildNowSidebarButton;
 
-    @FindBy(css = "a[tooltip$='> Console Output']")
+    @FindBy(xpath = "//div[@id = 'jenkins-build-history']")
     private WebElement buildIcon;
 
     @FindBy(css = "a[href$='multi-pipeline-graph']")
