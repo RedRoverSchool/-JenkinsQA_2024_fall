@@ -63,7 +63,7 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(xpath = "//tr/td/a[@class='jenkins-table__link model-link inside']")
     private List<WebElement> projectList;
 
-    @FindBy(xpath = "//div[@class='tippy-content']")
+    @FindBy(xpath = "//span[text()='Build scheduled']")
     private WebElement buildScheduledTooltip;
 
     @FindBy(xpath = "(//button[@class='jenkins-menu-dropdown-chevron'])[1]")

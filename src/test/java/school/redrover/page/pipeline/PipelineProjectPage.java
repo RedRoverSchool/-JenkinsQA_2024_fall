@@ -22,8 +22,8 @@ public class PipelineProjectPage extends BaseProjectPage<PipelineProjectPage, Pi
     @FindBy(css = "a[data-build-success='Build scheduled']")
     private WebElement buildNowSidebarButton;
 
-    @FindBy(css = "a[tooltip$='> Console Output']")
-    private WebElement buildIcon;
+    @FindBy(xpath = "//span[text()='Build scheduled']")
+    private WebElement buildScheduledTooltip;
 
     @FindBy(css = "a[href$='multi-pipeline-graph']")
     private WebElement stagesSidebarButton;
@@ -67,7 +67,8 @@ public class PipelineProjectPage extends BaseProjectPage<PipelineProjectPage, Pi
     @Step("Click on 'Build Now' item on side panel and waite")
     public PipelineProjectPage clickOnBuildNowItemOnSidePanelAndWait() {
         buildNowSidebarButton.click();
-        getWait5().until(ExpectedConditions.visibilityOf(buildIcon));
+        getWait10().until(ExpectedConditions.visibilityOf(buildScheduledTooltip));
+        getWait10().until(ExpectedConditions.invisibilityOf(buildScheduledTooltip));
 
         return this;
     }

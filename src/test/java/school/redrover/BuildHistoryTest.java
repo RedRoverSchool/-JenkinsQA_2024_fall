@@ -5,19 +5,17 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import school.redrover.page.home.BuildHistoryPage;
 import school.redrover.page.home.HomePage;
 import school.redrover.runner.BaseTest;
 
 @Epic("08 Build History")
-@Ignore
+@Story("US_08.005 Build History")
 public class BuildHistoryTest extends BaseTest {
 
     private static final String FREESTYLE_PROJECT_NAME = "FreestyleProject";
     private static final String PIPELINE_PROJECT_NAME = "PipelineProject";
-
 
     @Test
     @Epic("00 New Item")
@@ -55,7 +53,6 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "testDisplaySuccessBuild")
-    @Story("US_08.005 Build History")
     @Description("TC_08.005.06 Check console output of successful build")
     public void testSuccessfulBuildConsoleOutputCheck() {
         String result = new HomePage(getDriver())
@@ -69,7 +66,6 @@ public class BuildHistoryTest extends BaseTest {
 
     @Test
     @Epic("00 New Item")
-    @Story("US_08.002 Create Pipeline Project")
     @Description("TC_00.002.01 Create Pipeline Project with valid name via sidepanel")
     public void testCreatePipelineProjectWithoutSaveButton() {
         String pipelineProject = new HomePage(getDriver())
@@ -85,7 +81,6 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "testCreatePipelineProjectWithoutSaveButton")
-    @Story("US_08.005 Build History")
     @Description("TC_08.005.02 Displaying first failed build with status 'broken since this build'")
     public void testDisplayFirstFailedBuild() {
 
@@ -106,7 +101,6 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "testDisplayFirstFailedBuild")
-    @Story("US_08.005 Build History")
     @Description("TC_08.005.07 Check console output of failed build")
     public void testFailedBuildConsoleOutputCheck() {
         String result = new HomePage(getDriver())
@@ -119,7 +113,6 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "testFailedBuildConsoleOutputCheck")
-    @Story("US_08.005 Build History")
     @Description("TC_08.005.03 Displaying next failed build with status 'broken for a long time'")
     public void testDisplayNextFailedBuild() {
         BuildHistoryPage buildHistoryPage = new HomePage(getDriver())
@@ -136,7 +129,6 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "testDisplayNextFailedBuild")
-    @Story("US_08.005 Build History")
     @Description("TC_08.005.04 Displaying first successful build after failed with status 'back to normal'")
     public void testDisplayFirstSuccessfulBuildAfterFailed() {
         BuildHistoryPage buildHistoryPage = new HomePage(getDriver())
@@ -157,7 +149,6 @@ public class BuildHistoryTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "testDisplayFirstSuccessfulBuildAfterFailed")
-    @Story("US_08.005 Build History")
     @Description("TC_08.005.05 Displaying next successful build after successful with status 'stable'")
     public void testDisplayNextSuccessfulBuildAfterSuccessful() {
         BuildHistoryPage buildHistoryPage = new HomePage(getDriver())
